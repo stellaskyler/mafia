@@ -83,7 +83,7 @@ h2 {
 }
 
 .pill:focus,
-.log-area:focus {
+.chat-log:focus-within {
   outline: 2px solid #8a6a4b;
   outline-offset: 2px;
 }
@@ -123,16 +123,51 @@ h2 {
   color: #6b5c50;
 }
 
-.log-area {
+.chat-log {
   margin-top: 8px;
   min-height: 260px;
   padding: 14px 16px;
   border-radius: 12px;
   background: #faf7f2;
   border: 1px solid #efe3d6;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.95rem;
-  white-space: pre-wrap;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.chat-message {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #efe3d6;
+  padding: 12px 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: #6b5c50;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.chat-speaker {
+  font-weight: 700;
+  color: #3e352c;
+}
+
+.chat-body {
+  font-size: 0.98rem;
+  color: #231e18;
+}
+
+.chat-timestamp {
+  font-variant-numeric: tabular-nums;
+  color: #8a6a4b;
 }
 
 .page-footer {
