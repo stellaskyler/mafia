@@ -61,10 +61,119 @@ Moderator notes, vote results, and public announcements go here.
 - Example: Vote tally — Alex (3), Bri (2), Chen (1). Alex eliminated.
         </div>
       </section>
+
+      <section class="card chat" aria-labelledby="chat-log-title">
+        <div class="card-header">
+          <div>
+            <h2 id="chat-log-title">Moderator Chat Log</h2>
+            <p class="hint">Log private prompts, whispers, and reminders for quick recall.</p>
+          </div>
+          <button class="clear-log" type="button">Clear log</button>
+        </div>
+        <ul class="chat-log" aria-live="polite"></ul>
+        <form class="chat-form" autocomplete="off">
+          <label class="field">
+            <span>Speaker</span>
+            <input type="text" name="speaker" placeholder="e.g., Alex" required />
+          </label>
+          <label class="field field-wide">
+            <span>Message</span>
+            <textarea name="message" rows="3" placeholder="Note the key message..." required></textarea>
+          </label>
+          <button type="submit">Add message</button>
+        </form>
+      </section>
     </main>
 
     <footer class="page-footer">
       <p>Tip: Keep headers visible in each chat so players can scan quickly.</p>
     </footer>
+
+    <script>
+      const storageKey = "mafiaChatLog";
+      const chatLog = document.querySelector(".chat-log");
+      const chatForm = document.querySelector(".chat-form");
+      const clearLogButton = document.querySelector(".clear-log");
+
+      const loadChatLog = () => {
+        const stored = localStorage.getItem(storageKey);
+        try {
+          const parsed = stored ? JSON.parse(stored) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+          console.warn("Unable to read chat log from storage.", error);
+          return [];
+        }
+      };
+
+      const saveChatLog = (messages) => {
+        localStorage.setItem(storageKey, JSON.stringify(messages));
+      };
+
+      const renderMessage = ({ speaker, text, timestamp }) => {
+        const item = document.createElement("li");
+        item.className = "chat-message";
+
+        const meta = document.createElement("div");
+        meta.className = "chat-meta";
+
+        const speakerSpan = document.createElement("span");
+        speakerSpan.className = "chat-speaker";
+        speakerSpan.textContent = speaker;
+
+        const timeSpan = document.createElement("span");
+        timeSpan.className = "chat-time";
+        const formattedTime = new Date(timestamp).toLocaleString(undefined, {
+          hour: "2-digit",
+          minute: "2-digit",
+          month: "short",
+          day: "2-digit",
+        });
+        timeSpan.textContent = formattedTime;
+
+        meta.append(speakerSpan, timeSpan);
+
+        const textBlock = document.createElement("p");
+        textBlock.className = "chat-text";
+        textBlock.textContent = text;
+
+        item.append(meta, textBlock);
+        chatLog.append(item);
+      };
+
+      const messages = loadChatLog();
+      messages.forEach(renderMessage);
+
+      chatForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(chatForm);
+        const speaker = formData.get("speaker").toString().trim();
+        const text = formData.get("message").toString().trim();
+        if (!speaker || !text) {
+          return;
+        }
+
+        const entry = {
+          speaker,
+          text,
+          timestamp: new Date().toISOString(),
+        };
+
+        messages.push(entry);
+        renderMessage(entry);
+        saveChatLog(messages);
+        chatForm.reset();
+      });
+
+      clearLogButton.addEventListener("click", () => {
+        const shouldClear = window.confirm("Clear the chat log? This cannot be undone.");
+        if (!shouldClear) {
+          return;
+        }
+        messages.length = 0;
+        chatLog.innerHTML = "";
+        localStorage.removeItem(storageKey);
+      });
+    </script>
   </body>
 </html>
