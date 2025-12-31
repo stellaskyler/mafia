@@ -83,6 +83,9 @@ h2 {
 }
 
 .pill:focus,
+.message-input:focus,
+.persona-button:focus-visible,
+.send-button:focus-visible {
 .chat-log:focus-within {
   outline: 2px solid #8a6a4b;
   outline-offset: 2px;
@@ -126,10 +129,113 @@ h2 {
 .chat-log {
   margin-top: 8px;
   min-height: 260px;
-  padding: 14px 16px;
+  padding: 16px;
   border-radius: 12px;
   background: #faf7f2;
   border: 1px solid #efe3d6;
+  display: grid;
+  gap: 16px;
+}
+
+.chat-log {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-entry {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e7dbce;
+  box-shadow: 0 8px 18px rgba(22, 18, 15, 0.06);
+}
+
+.chat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b5c50;
+  font-weight: 600;
+}
+
+.chat-body {
+  font-size: 0.98rem;
+  color: #2f2821;
+}
+
+.persona-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.persona-button {
+  border-radius: 999px;
+  border: 1px solid #d8c9bb;
+  background: #f5efe8;
+  color: #3e352c;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.persona-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(22, 18, 15, 0.12);
+}
+
+.persona-button.is-active {
+  background: #8a6a4b;
+  color: #ffffff;
+  border-color: #7c5e41;
+  box-shadow: 0 8px 16px rgba(138, 106, 75, 0.25);
+}
+
+.message-label {
+  font-size: 0.85rem;
+  color: #6b5c50;
+  font-weight: 600;
+}
+
+.message-composer {
+  display: grid;
+  gap: 12px;
+}
+
+.message-input {
+  width: 100%;
+  resize: vertical;
+  min-height: 90px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e2d7cb;
+  background: #ffffff;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+
+.send-button {
+  justify-self: start;
+  border-radius: 10px;
+  border: 1px solid #7c5e41;
+  background: #8a6a4b;
+  color: #ffffff;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 20px rgba(138, 106, 75, 0.24);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.send-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(138, 106, 75, 0.3);
   list-style: none;
   display: grid;
   gap: 14px;

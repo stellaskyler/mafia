@@ -48,13 +48,88 @@
           <h2 id="public-log-title">Public Log</h2>
           <span class="tag">Moderator paste-ins</span>
         </div>
-        <ul class="chat-log" aria-label="Public log"></ul>
+        <div class="log-area">
+          <ul class="chat-log" role="list" aria-live="polite" aria-label="Public log entries">
+            <li class="chat-entry">
+              <span class="chat-label">System</span>
+              <p class="chat-body">7 players alive. Day 1 begins.</p>
+            </li>
+            <li class="chat-entry">
+              <span class="chat-label">System</span>
+              <p class="chat-body">Vote tally — Alex (3), Bri (2), Chen (1). Alex eliminated.</p>
+            </li>
+          </ul>
+          <div class="persona-group" role="group" aria-label="Select persona">
+            <button class="persona-button is-active" type="button" aria-pressed="true" data-persona="System">
+              System
+            </button>
+            <button class="persona-button" type="button" aria-pressed="false" data-persona="Alex">Alex</button>
+            <button class="persona-button" type="button" aria-pressed="false" data-persona="Bri">Bri</button>
+            <button class="persona-button" type="button" aria-pressed="false" data-persona="Chen">Chen</button>
+          </div>
+          <form class="message-composer">
+            <label class="message-label" for="public-message">Add entry</label>
+            <textarea
+              id="public-message"
+              class="message-input"
+              rows="3"
+              placeholder="Type a public log entry..."
+            ></textarea>
+            <button class="send-button" type="submit">Send/Append</button>
+          </form>
+        </div>
       </section>
     </main>
 
     <footer class="page-footer">
       <p>Tip: Keep headers visible in each chat so players can scan quickly.</p>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+      const personaButtons = Array.from(document.querySelectorAll(".persona-button"));
+      const chatLog = document.querySelector(".chat-log");
+      const messageInput = document.querySelector("#public-message");
+      const composer = document.querySelector(".message-composer");
+      let activePersona = "System";
+
+      const setActivePersona = (persona) => {
+        activePersona = persona;
+        personaButtons.forEach((button) => {
+          const isActive = button.dataset.persona === persona;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive);
+        });
+      };
+
+      personaButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setActivePersona(button.dataset.persona);
+        });
+      });
+
+      composer.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const message = messageInput.value.trim();
+        if (!message) {
+          return;
+        }
+
+        const entry = document.createElement("li");
+        entry.className = "chat-entry";
+
+        const label = document.createElement("span");
+        label.className = "chat-label";
+        label.textContent = activePersona;
+
+        const body = document.createElement("p");
+        body.className = "chat-body";
+        body.textContent = message;
+
+        entry.append(label, body);
+        chatLog.append(entry);
+        messageInput.value = "";
+        messageInput.focus();
+      });
+    </script>
   </body>
 </html>
