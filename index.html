@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mafia — Moderator Sheet</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <p class="eyebrow">Mafia Game Quick Sheet</p>
+      <h1>Mafia</h1>
+      <p class="summary">
+        A social deduction game of secrets, persuasion, and timing. Players debate during the day,
+        vote to eliminate suspects, and aim to outlast the opposing team.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="card" aria-labelledby="current-phase-title">
+        <div class="card-header">
+          <h2 id="current-phase-title">Current Phase</h2>
+          <span class="pill" role="note" contenteditable="true" aria-label="Current phase">Day 1 — Discussion</span>
+        </div>
+        <p class="hint">Click the phase pill to edit. Example: “Night 2 — Actions”.</p>
+      </section>
+
+      <section class="card" aria-labelledby="day-flow-title">
+        <h2 id="day-flow-title">Day Flow Rules</h2>
+        <ol class="flow">
+          <li>
+            <strong>Discussion</strong>
+            <p>Open debate. Share reads, ask questions, and surface inconsistencies.</p>
+          </li>
+          <li>
+            <strong>Accusation</strong>
+            <p>Players make cases, propose suspects, and request clarifications.</p>
+          </li>
+          <li>
+            <strong>Voting</strong>
+            <p>Moderator calls a vote. Tally openly and announce the outcome.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="card log" aria-labelledby="public-log-title">
+        <div class="card-header">
+          <h2 id="public-log-title">Public Log</h2>
+          <span class="tag">Moderator paste-ins</span>
+        </div>
+        <div
+          class="log-area"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          aria-label="Public log"
+        >
+Moderator notes, vote results, and public announcements go here.
+
+- Example: 7 players alive. Day 1 begins.
+- Example: Vote tally — Alex (3), Bri (2), Chen (1). Alex eliminated.
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>Tip: Keep headers visible in each chat so players can scan quickly.</p>
+    </footer>
+  </body>
+</html>
